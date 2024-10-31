@@ -15,12 +15,6 @@
   .page-container {
     padding: 20px;
     text-align: center;
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 20;
-    right: 0;
-    margin: auto;
   }
   </style>
   

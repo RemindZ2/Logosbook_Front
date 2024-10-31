@@ -1,55 +1,62 @@
 <template>
-    <div class="chat-container">
-      <div class="messages">
-        <div class="message bot-message">
-          <p>Привет! Как ваши дела?</p>
-        </div>
-  
-        <div
-          v-for="(message, index) in chatMessages"
-          :key="index"
-          :class="['message', message.sender === 'user' ? 'user-message' : 'bot-message']"
-        >
-          <p>{{ message.text }}</p>
-        </div>
+  <div class="chat-container">
+    <div class="messages">
+      <div class="message bot-message">
+        <p>Привет! Как ваши дела?</p>
       </div>
-  
-      <div class="input-container">
-        <input
-          type="text"
-          v-model="newMessage"
-          @keyup.enter="sendMessage"
-          placeholder="Напишите сообщение..."
-        />
-        <button @click="sendMessage">Отправить</button>
+
+      <div
+        v-for="(message, index) in chatMessages"
+        :key="index"
+        :class="['message', message.sender === 'user' ? 'user-message' : 'bot-message']"
+      >
+        <p>{{ message.text }}</p>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        newMessage: "", // Новое сообщение пользователя
-        chatMessages: [], // Массив сообщений в чате
-      };
+
+    <div class="input-container">
+      <input
+        type="text"
+        v-model="newMessage"
+        @keyup.enter="sendMessage"
+        placeholder="Напишите сообщение..."
+      />
+      <button @click="sendMessage">Отправить</button>
+      <select v-model="compressionLevel" class="compression-select">
+        <option value="high">Сверхсжатие</option>
+        <option value="normal">Сжатие</option>
+      </select>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      newMessage: "", // Новое сообщение пользователя
+      chatMessages: [], // Массив сообщений в чате
+      compressionLevel: "normal" // Уровень сжатия
+    };
+  },
+  methods: {
+    sendMessage() {
+      if (this.newMessage.trim() === "") return; // Проверка на пустое сообщение
+      this.chatMessages.push({ text: this.newMessage, sender: "user" });
+      this.newMessage = "";
     },
-    methods: {
-      sendMessage() {
-        if (this.newMessage.trim() === "") return; // Проверка на пустое сообщение
-  
-        this.chatMessages.push({ text: this.newMessage, sender: "user" });
-        this.newMessage = "";
-  
-        /*setTimeout(() => {
-          this.chatMessages.push({ text: "Собеседник: Принял ваше сообщение.", sender: "bot" });
-        }, 1000);*/
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
   
   <style scoped>
+  .compression-select {
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  }
   .chat-container {
     display: flex;
     flex-direction: column;
@@ -59,7 +66,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    min-width: 700px;
+    min-width: 800px;
   }
   
   .messages {
