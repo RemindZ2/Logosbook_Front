@@ -34,94 +34,103 @@
 export default {
   data() {
     return {
-      newMessage: "", // Новое сообщение пользователя
-      chatMessages: [], // Массив сообщений в чате
-      compressionLevel: "normal" // Уровень сжатия
+      newMessage: "",
+      chatMessages: [],
+      compressionLevel: "normal"
     };
   },
   methods: {
-    sendMessage() {
-      if (this.newMessage.trim() === "") return; // Проверка на пустое сообщение
+    async sendMessage() {
+      if (this.newMessage.trim() === "") return;
       this.chatMessages.push({ text: this.newMessage, sender: "user" });
+
+      const response = await fetch("http://localhost:8000/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: this.newMessage, compression: this.compressionLevel }),
+      });
+      const data = await response.json();
+      this.chatMessages.push({ text: data.response, sender: 'ИИ' });
+
       this.newMessage = "";
     },
   },
 };
 </script>
-  
-  <style scoped>
-  .compression-select {
+
+<style scoped>
+.compression-select {
   margin-left: 10px;
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
   border: 1px solid #ddd;
-  }
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 90vh;
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    min-width: 800px;
-  }
-  
-  .messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background-color: #f5f5f5;
-  }
-  
-  .message {
-    margin: 10px 0;
-    padding: 12px;
-    border-radius: 10px;
-    max-width: 70%;
-    word-wrap: break-word;
-  }
-  
-  .bot-message {
-    background-color: #e0e0e0;
-    align-self: flex-start;
-  }
-  
-  .user-message {
-    background-color: #317fc7;
-    color: white;
-    align-self: flex-end;
-  }
-  
-  .input-container {
-    display: flex;
-    border-top: 1px solid #ddd;
-    padding: 10px;
-  }
-  
-  input[type="text"] {
-    flex: 1;
-    padding: 15px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    outline: none;
-    margin-right: 10px;
-  }
-  
-  button {
-    padding: 15px 25px;
-    font-size: 16px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #000000;
-  }
-  </style>
+}
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 800px;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.bot-message {
+  background-color: #e0e0e0;
+  align-self: flex-start;
+}
+
+.user-message {
+  background-color: #317fc7;
+  color: white;
+  align-self: flex-end;
+}
+
+.input-container {
+  display: flex;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  margin-right: 10px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 16px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #000000;
+}
+</style>
