@@ -9,6 +9,7 @@ import Chat from '@/components/Chat.vue';
 import Collection from '@/components/Collection.vue';
 import Upload from '@/components/Upload.vue';
 import Exit from '@/components/Exit.vue';
+import Reading from '@/components/Reading.vue'
 
 const routes = [
     { 
@@ -46,8 +47,11 @@ const routes = [
     {
       path: '/exit', name: Exit,
       component: Exit
+    },
+    {
+    path: '/reading', name: Reading,
+    component: Reading
     }
-    
 ];
 
 const router = createRouter({
