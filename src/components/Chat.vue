@@ -2,7 +2,7 @@
   <div class="chat-container">
     <div class="messages">
       <div class="message bot-message">
-        <p>Привет! Как ваши дела?</p>
+        <p>Отправляйте поочерёдно ваши тексты и я их сожму!</p>
       </div>
 
       <div
@@ -23,8 +23,8 @@
       />
       <button @click="sendMessage">Отправить</button>
       <select v-model="compressionLevel" class="compression-select">
-        <option value="high">Сверхсжатие</option>
-        <option value="normal">Сжатие</option>
+        <option value="high">Сильное сжатие</option>
+        <option value="normal">Слабое сжатие</option>
       </select>
     </div>
   </div>
