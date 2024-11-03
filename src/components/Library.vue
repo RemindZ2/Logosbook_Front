@@ -6,14 +6,30 @@
         <img :src="book.cover" alt="cover" class="cover" />
         <div class="title">{{ book.title }}</div>
         <div class="author">{{ book.author }}</div>
-        <button class="read-button">Читать</button>
+        <!-- Добавляем метод goToReadingPage -->
+        <button class="read-button" @click="goToReadingPage(book)">Читать</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
+  setup() {
+    const router = useRouter();
+    function goToReadingPage(book) {
+      if (book.title === 'Война и мир') {
+        router.push('/reading');
+      }
+    }
+
+    return {
+      goToReadingPage,
+    };
+  },
+
   data() {
     return {
       books: [
@@ -97,5 +113,3 @@ h2 {
   background-color: #333;
 }
 </style>
-
-  
