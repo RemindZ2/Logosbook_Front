@@ -2,7 +2,12 @@
   <div class="sidebar">
     <ul>
       <img src="@/assets/images/logosbook.png" alt="Логотип" class="logo">
-      
+
+
+      <button
+        :class="{ active: activeButton === '/reading' }"
+        @click="goToPage('/reading')"
+      ></button>
       <button
         :class="{ active: activeButton === '/library' }"
         @click="goToPage('/library')"
